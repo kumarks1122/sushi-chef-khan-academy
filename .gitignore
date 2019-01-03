@@ -1,3 +1,8 @@
+client_secret.json
+credentials.json
+*_images*
+*_videos*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

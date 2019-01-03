@@ -11,8 +11,8 @@ import youtube_dl
 import shutil
 import requests
 
-class DownloadKa():
-  """docstring for DownloadKa
+class DownloadTn():
+  """docstring for DownloadTn
     reading and downloading KA content data youtube
   """
 
@@ -20,8 +20,8 @@ class DownloadKa():
     self.contents = []
     self.youtube = None
     self.MP4 = "mp4"
-    self.videos_path = "./ka_videos"
-    self.thumbnails_path = "./ka_images"
+    self.videos_path = "./tn_videos"
+    self.thumbnails_path = "./tn_images"
     self.uploaded_contents = []
 
   def process_content(self, video_data):
@@ -48,23 +48,23 @@ class DownloadKa():
         f.close()
 
         content["video_name"] = "{}.mp4".format(video_id)
-        drive_file = self.service.files().create(body={'name': content["video_name"], "parents": ["1vvXZDznBqe6eba42DluS_C52lNXYZqwx"]}, media_body=video_file_path).execute()
+        drive_file = self.service.files().create(body={'name': content["video_name"], "parents": ["17VgIHddGW24Yd0hWIoALnDt0srOc1KZ9"]}, media_body=video_file_path).execute()
         content['drive_file_path'] = "https://drive.google.com/open?id=" + drive_file['id']
 
         # if generation[content["kind"]] < 31:
         # pdb.set_trace()
         content["thumbnail_file_name"] = "{}.jpg".format(video_id)
 
-        drive_file = self.service.files().create(body={'name': content["thumbnail_file_name"], "parents": ["1GTE3y8SrRxqj-I7IBIvpwFS1x8_AvwXo"]}, media_body=thumbnail_file_path).execute()
+        drive_file = self.service.files().create(body={'name': content["thumbnail_file_name"], "parents": ["1bh6IszPGB2_c-TEVhoOwdRfYpTVG4Hnh"]}, media_body=thumbnail_file_path).execute()
         content['thumbnail_file_path'] = "https://drive.google.com/open?id=" + drive_file['id']
 
     self.contents.append(content)
-    with open('KARNATAKA_contents.json', 'w') as outfile:
+    with open('TAMILNADU_contents.json', 'w') as outfile:
       json.dump(self.contents, outfile)
 
   def list_all_contents(self):
-    with open('KARNATAKA_contents.json', 'r') as outfile:
-      self.contents = json.load(outfile)
+    # with open('TAMILNADU_contents.json', 'r') as outfile:
+    #   self.contents = json.load(outfile)
 
     for content in self.contents:
       self.uploaded_contents.append(content['youtube_id'])
@@ -77,7 +77,7 @@ class DownloadKa():
         part='id,snippet',
         maxResults=50,
         pageToken=page_token,
-        channelId="UClHj-U2Ec9W7Jt2sHiwQwAw"
+        channelId="UC5qNUOOTmdBXS5A4Bj6UuRg"
       ).execute()
 
       for search_result in response.get('items', []):
@@ -102,5 +102,5 @@ class DownloadKa():
     self.list_all_contents()
 
 if __name__ == '__main__':
-  chef = DownloadKa()
+  chef = DownloadTn()
   chef.main()
